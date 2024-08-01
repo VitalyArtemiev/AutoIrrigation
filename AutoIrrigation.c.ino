@@ -1,14 +1,3 @@
-/*
-  Blink
-  Turns on an LED on for one second, then off for one second, repeatedly.
-
-  Z-Uno has an on-board LED you can control. It is attached to digital pin 13.
-  LED_BUILTIN is an internal Define which can be used to access this LED.
-  This example demonstrates the simple blink programm, where the blink interval can be changed from the Z-Wave controller.
-  More information on http://z-uno.z-wave.me/
-
-*/
-
 #include "Arduino.h"
 #include "ZUNO_Buttons.h"
 
@@ -38,8 +27,6 @@
 #define PIN_RELAY 8
 
 #define PIN_PRESSURE A1
-
-ZUNO_SETUP_DEBUG_MODE(DEBUG_ON);
 
 word tank_water_volume = 0;
 word pressure = 0;
@@ -254,12 +241,6 @@ void process_pressure() {
     zunoSendReport(CH_PRESSURE);
     zunoSendReport(CH_TANK);
   }
-
-  // Serial.println("pressure");
-  // Serial.println(pressure);
-
-  // Serial.println("volume");
-  // Serial.println(tank_water_volume);
 }
 
 // the loop function runs over and over again forever
@@ -268,12 +249,4 @@ void loop() {
   process_relays();
   process_pressure();
   delay((dword)LOOP_DELAY - (millis() % LOOP_DELAY));
-  Serial.println("valves");
-  Serial.println(valve_1);
-  Serial.println(valve_2);
-  Serial.println(relay);
-
-  Serial.println(valve_1_actual);
-  Serial.println(valve_2_actual);
-  Serial.println(relay_actual);
 }
