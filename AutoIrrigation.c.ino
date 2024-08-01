@@ -2,7 +2,7 @@
 #include "ZUNO_Buttons.h"
 
 #define LOOP_DELAY 1000
-#define VALVE_DELAY 1000
+#define VALVE_DELAY 10000
 
 #define TANK_AREA 1
 
@@ -90,6 +90,7 @@ bool write_rate_limited(dword* last_write, dword delay, int pin, int value) {
     return false;
   }
 
+  // possible bug here once in 51 days
   dword now = millis();
   if (now - *last_write > delay) {
     digitalWrite(pin, value);
@@ -105,6 +106,7 @@ void process_valves() {
   bool close;
   bool open;
 
+  // pullup -> high means no contact
   close = !digitalRead(BUTTON_VALVE_1_CLOSE);
   open = !digitalRead(BUTTON_VALVE_1_OPEN);
   byte valve_1_target = valve_1 && !close || open;
@@ -121,6 +123,7 @@ void process_valves() {
     }
   }
 
+  // pullup -> high means no contact
   close = !digitalRead(BUTTON_VALVE_2_CLOSE);
   open = !digitalRead(BUTTON_VALVE_2_OPEN);
   byte valve_2_target = valve_2 && !close || open;
